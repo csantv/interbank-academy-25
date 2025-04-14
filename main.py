@@ -15,18 +15,24 @@ def main():
 
         # bucle a través de todas las líneas del archivo
         for tx_id, tx_type, tx_amount in tx_reader:
+            try:
+                monto = float(tx_amount)
+            except ValueError:
+                print("Monto no se puede convertir a float")
+                continue
+
             if tx_type == 'Crédito':
                 num_credit += 1
-                final_amount += float(tx_amount)
+                final_amount += monto
 
             if tx_type == 'Débito':
                 num_debit += 1
-                final_amount -= float(tx_amount)
+                final_amount -= monto
 
             # guardar transacción para calcular la cantidad máxima después
             tx_list.append({
                 "id": tx_id,
-                "amount": float(tx_amount)
+                "amount": monto
             })
 
     # obtener la mayor transacción
